@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>动态创建表格</title>
+<meta charset="utf-8" />
+<style>
+	table{width:600px; border-collapse:collapse;
+		text-align:center;
+	}
+	td,th{border:1px solid #ccc}
+</style>
+
+</head>
+<body>
+	<div id="data">
+    <table>
+      <thead>
+        <tr>
+            <td>员工姓名</td>
+            <td>工资</td>
+            <td>年龄</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <script>
+	var json=[
+    {"ename":"Tom", "salary":11000, "age":25},
+    {"ename":"John", "salary":13000, "age":28},
+    {"ename":"Mary", "salary":12000, "age":25}
+  ];
+    //创建tbody标签
+    var tbody=document.createElement("tbody");
+    //先别把tbody追加到table中，不然后面tr每循环一遍就追加，这样对dom操作过于频繁，容易造成闪屏等各种问题，所以把tbody放到最后。效果不变，效果提高很多。
+    
+    for(var row of json){
+      var tr=document.createElement("tr")
+      tbody.appendChild(tr)
+      for(var column in row){
+        var td=document.createElement("td")
+        tr.appendChild(td)
+        td.innerHTML=row[column]
+      }
+    }
+    //将tbody放到最后，一次性把结果都追加到table中，效率搞，对dom树操作少，不会造成闪屏等问题
+    //将tbody追加到table里
+    document.getElementById("data").children[0].appendChild(tbody)
+  </script>
+</body>
+</html>
